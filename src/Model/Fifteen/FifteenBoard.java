@@ -67,7 +67,7 @@ public class FifteenBoard extends Board {
 
     @Override
     public int getHeuristic() {
-        return getManhattanDistance() + getCellDisplacement();
+        return getManhattanDistance();
     }
 
     public int getLinearConflict(){
@@ -99,7 +99,7 @@ public class FifteenBoard extends Board {
                 continue;
 
             if (tiles[i] != i + 1)
-                result += (size * size - tiles[i]) * (size * size - tiles[i]) * getK(tiles[i]);
+                result += getCellImportance(i, 3) * getK(tiles[i]);
         }
 
         return result;
@@ -117,7 +117,7 @@ public class FifteenBoard extends Board {
             int boardSize = size;
             int offset = Math.abs((currentTile % boardSize) - ((i + 1) % boardSize)) + Math.abs(currentTile / boardSize - (i + 1) / boardSize);
 
-            result += offset * (size * size - currentTile) * (size * size - currentTile) * getK(tiles[i]);
+            result += offset * getCellImportance(i, 3) * getK(tiles[i]);
         }
 
         return result;
@@ -127,7 +127,7 @@ public class FifteenBoard extends Board {
         int k = 1;
 
         if (tile <= size * (size - 2))
-            k = 100000;
+            k = 10000;
         else if (tile == (size - 2) * size + 1)
             k = 1000;
         else if (tile == (size - 1) * size + 1)
@@ -136,6 +136,16 @@ public class FifteenBoard extends Board {
             k = 10;
 
         return k;
+    }
+
+    private int getCellImportance(int index, int importanceLevel){
+        int result = 1;
+
+        for (int i = 0; i < importanceLevel; i++) {
+            result *= (size * size - tiles[index]);
+        }
+
+        return result;
     }
 
     private void fill(){

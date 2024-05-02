@@ -1,10 +1,8 @@
 package Model.Fifteen;
 
 import Model.Abstract.Board;
-import Model.State;
 import jdk.jshell.spi.ExecutionControl;
 
-import javax.naming.InitialContext;
 import java.util.*;
 
 public class AutomaticFifteenSolveStrategy extends FifteenSolveStrategy {
@@ -85,18 +83,6 @@ public class AutomaticFifteenSolveStrategy extends FifteenSolveStrategy {
         }
 
         return result;
-    }
-
-    private Collection<State> restorePath(State terminate) {
-        Deque<State> path = new LinkedList<State>();
-        State c = terminate;
-
-        while (c != null) {
-            path.addFirst(c);
-            c = c.getParent();
-        }
-
-        return path;
     }
 
     private boolean isSolved(){
