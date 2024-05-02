@@ -6,9 +6,9 @@ import Model.PlayMode;
 import jdk.jshell.spi.ExecutionControl;
 
 public class FifteenGame extends Game {
-    public FifteenGame(PlayMode mode) {
+    public FifteenGame(int size, PlayMode mode) {
         super(mode);
-        board = new FifteenBoard();
+        board = new FifteenBoard(size);
         solver = new Solver(new AutomaticFifteenSolveStrategy(board));
     }
 

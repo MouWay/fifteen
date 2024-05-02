@@ -2,7 +2,7 @@ package Model.Abstract;
 
 import Model.PlayMode;
 import Model.Fifteen.AutomaticFifteenSolveStrategy;
-import Model.Fifteen.ManualFifteenSolveStrategy;
+import Model.Fifteen.AStarFifteenSolveStrategy;
 import jdk.jshell.spi.ExecutionControl;
 
 public abstract class Game {
@@ -16,6 +16,10 @@ public abstract class Game {
     }
 
     public abstract void start() throws ExecutionControl.NotImplementedException;
+
+    public Board getBoard() {
+        return board;
+    }
 
     public void showState(){
         System.out.println(board);
@@ -33,8 +37,12 @@ public abstract class Game {
                 solver.setStrategy(new AutomaticFifteenSolveStrategy(board));
                 break;
             case Manual:
-                solver.setStrategy(new ManualFifteenSolveStrategy(board));
+                solver.setStrategy(new AStarFifteenSolveStrategy(board));
                 break;
         }
+    }
+
+    public void setSolvingStrategy(SolveStrategy strategy){
+        solver.setStrategy(strategy);
     }
 }
